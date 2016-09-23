@@ -29,20 +29,14 @@ def dump(obj, nested_level=0, output=sys.stdout):
     else:
         print >> output, '%s%s' % (nested_level * spacing, obj)
 
-# Replace with the correct URL
 base_url = 'https://tcnj.instructure.com' # Base URL with API
-url = base_url + '/api/v1'
+url = base_url + '/api/v1' # Path to Canvas API
 # Use raw_input() to get data on a per user basis at runtime
-# Verify usage of account id
-# account_id = '88968'
-# account_id = raw_input('Account ID: ')
-# token = '19~zsbPmi9Fdj7rJ7ilOXVEtFdpavFRPUzt3EMA1TlWhQbsCbKVH6aQcQTSkHFS2qHK'
-token = raw_input('Access Token: ')
-# userid = '/5225612/'
 userid = raw_input('User ID: ')
+token = raw_input('Access Token: ')
 
-myResponse = requests.get(url + '/users/' +  '%s' %(userid) + 'courses',headers = {'Authorization': 'Bearer ' + '%s' %(token)})
-#print (myResponse.status_code)
+myResponse = requests.get(url + '/users/' + '%s' %(userid) + '/courses/',headers = {'Authorization': 'Bearer ' + '%s' %(token)})
+# print (myResponse.status_code)
 
 # For successful API call, response code will be 200 (OK)
 if(myResponse.ok):
@@ -53,8 +47,9 @@ if(myResponse.ok):
     jData = json.loads(myResponse.content)
 
     print("The response contains {0} properties".format(len(jData)))
-    print("\n")
-    dump(jData)	
+    with open('courses.json', 'w') as outfile:
+        json.dump(jData, outfile)
+    dump(jData)
 else:
-  # If response code is not ok (200), print the resulting http error code with description
+    # If response code is not ok (200), print the resulting http error code with description
     myResponse.raise_for_status()
