@@ -1,11 +1,12 @@
 #Python 2.7.6
-#RestfulClient.py
+#tutorial.py
 
 import requests
-from requests.auth import HTTPDigestAuth
 import json
 import sys
+from requests.auth import HTTPDigestAuth
 
+# Format JSON output
 def dump(obj, nested_level=0, output=sys.stdout):
     spacing = '   '
     if type(obj) == dict:
@@ -31,11 +32,16 @@ def dump(obj, nested_level=0, output=sys.stdout):
 # Replace with the correct URL
 base_url = 'https://tcnj.instructure.com' # Base URL with API
 url = base_url + '/api/v1'
-account_id = '88968'
-token = '19~zsbPmi9Fdj7rJ7ilOXVEtFdpavFRPUzt3EMA1TlWhQbsCbKVH6aQcQTSkHFS2qHK'
-userid = '/5225612/'
-# It is a good practice not to hardcode the credentials. So ask the user to enter credentials at runtime
-myResponse = requests.get(url + '/users/' +  userid + 'courses',headers = {'Authorization': 'Bearer ' + '%s' % token})
+# Use raw_input() to get data on a per user basis at runtime
+# Verify usage of account id
+# account_id = '88968'
+# account_id = raw_input('Account ID: ')
+# token = '19~zsbPmi9Fdj7rJ7ilOXVEtFdpavFRPUzt3EMA1TlWhQbsCbKVH6aQcQTSkHFS2qHK'
+token = raw_input('Access Token: ')
+# userid = '/5225612/'
+userid = raw_input('User ID: ')
+
+myResponse = requests.get(url + '/users/' +  '%s' %(userid) + 'courses',headers = {'Authorization': 'Bearer ' + '%s' %(token)})
 #print (myResponse.status_code)
 
 # For successful API call, response code will be 200 (OK)
