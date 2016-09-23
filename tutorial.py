@@ -41,7 +41,7 @@ token = raw_input('Access Token: ')
 # userid = '/5225612/'
 userid = raw_input('User ID: ')
 
-myResponse = requests.get(url + '/users/' +  '%s' %(userid) + 'courses',headers = {'Authorization': 'Bearer ' + '%s' %(token)})
+myResponse = requests.get(url + '/users/' +  '%s' %(userid) + '/courses',headers = {'Authorization': 'Bearer ' + '%s' %(token)})
 #print (myResponse.status_code)
 
 # For successful API call, response code will be 200 (OK)
