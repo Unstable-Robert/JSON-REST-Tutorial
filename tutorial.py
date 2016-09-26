@@ -40,6 +40,8 @@ myResponse = requests.get(url + '/users/' + '%s' %(userid) + '/courses/',headers
 
 # For successful API call, response code will be 200 (OK)
 if(myResponse.ok):
+    with open('courses.json', 'w') as outfile:
+        json.dump(myResponse.content, outfile)
 
     # Loading the response data into a dict variable
     # json.loads takes in only binary or string variables so using content to fetch binary content
@@ -47,8 +49,6 @@ if(myResponse.ok):
     jData = json.loads(myResponse.content)
 
     print("The response contains {0} properties".format(len(jData)))
-    with open('courses.json', 'w') as outfile:
-        json.dump(jData, outfile)
     dump(jData)
 else:
     # If response code is not ok (200), print the resulting http error code with description
